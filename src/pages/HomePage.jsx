@@ -113,7 +113,7 @@ const HomePage = ({ countriesData }) => {
     let { darkTheme } = useContext(ThemeChange)
 
     return (
-        <div className={`${darkTheme ? 'bg-white-100 text-black' : 'bg-[#202D36] text-white'}`}>
+        <div className={`${darkTheme ? 'bg-white-100 text-black' : 'bg-[#202D36] min-h-[100vh] text-white'}`}>
             
             <div className={`${darkTheme ? 'bg-white-100 text-black' : 'bg-[#202D36] text-white'} flex justify-between mx-10`}>
 
@@ -130,9 +130,9 @@ const HomePage = ({ countriesData }) => {
             </div>
 
             <div className="flex flex-wrap justify-between mx-20">
-                {filterData.map((country) => {
+                { filterData.length >0 ? filterData.map((country) => {
                     return <CountriesCards countriesData={country} key={country.cca3} />
-                })}
+                }) : <h1 className='text-2xl'>No Filter data found</h1>}
             </div>
         </div>
     )
