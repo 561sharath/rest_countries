@@ -46,7 +46,7 @@ const About = () => {
                             <div className='grid grid-flow-col mt-10'>
                                 <div className='col-span-1'>
                                     <img src={aboutCountryData[0]?.flags?.png} className='rounded-lg w-[80%] h-[100%]' />
-                                    {/* {console.log(aboutCountryData[0]?.name)} */}
+                                    
                                 </div>
                                 <div >
                                     <div>
@@ -65,7 +65,7 @@ const About = () => {
                                         <div>
                                             <p><strong>Top Level Domain</strong> : {aboutCountryData[0]?.tld}</p>
                                             <p><strong>Currencies</strong> : {aboutCountryData[0] ? Object.keys(aboutCountryData[0].currencies) : []} </p>
-                                            {console.log(aboutCountryData[0]?.currencies)}
+                                            
                                             <p><strong>Languages</strong> : {aboutCountryData[0] ? Object.keys(aboutCountryData[0].languages) : []}</p>
 
                                         </div>
@@ -73,7 +73,7 @@ const About = () => {
                                     <div className='flex mt-10 flex-wrap'>
                                         <p><strong>Borders</strong> : </p>
                                         {aboutCountryData[0]?.borders ? aboutCountryData[0]?.borders.map((country, index) =>
-                                            // {console.log(country)}
+                                            
                                             <Link key={index} to={`/about/${country}`}>
                                                 <button className='border-2  ml-2 px-3'>{country}</button>
                                             </Link>

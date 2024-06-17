@@ -21,7 +21,7 @@ const CountrySections = ({handleRegionChange,continenetsData,subRegionsData,hand
     }
     
     let {darkTheme} = useContext(ThemeChange)
-    console.log(darkTheme,"hiii")
+    
 
     return (
         <div className={`${darkTheme ? 'bg-white' : 'bg-[#202D36]'}`}>
