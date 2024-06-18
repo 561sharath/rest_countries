@@ -70,7 +70,7 @@ const About = () => {
                                                 <p><strong>Top Level Domain</strong> : {aboutCountryData[0]?.tld}</p>
                                                 <p><strong>Currencies</strong> : {aboutCountryData[0] ? Object.keys(aboutCountryData[0].currencies).join(",") : []} </p>
 
-                                                <p><strong>Languages</strong> : {aboutCountryData[0] ? Object.keys(aboutCountryData[0].languages) : []}</p>
+                                                <p><strong>Languages</strong> : {aboutCountryData[0] ? Object.keys(aboutCountryData[0].languages).join(",") : []}</p>
 
                                             </div>
                                         </div>
