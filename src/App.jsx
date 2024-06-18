@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ThemeProvider from './context/Context'
 import HomePage from './pages/HomePage'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import About from './pages/About'
+import About from './pages/AboutPage'
 import Header from './components/Header'
 import ErrorPage from './pages/ErrorPage'
 
