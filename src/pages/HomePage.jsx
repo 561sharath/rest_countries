@@ -17,6 +17,7 @@ const HomePage = ({ countriesData }) => {
 
     function handleRegionChange(region) {
         setRegionData(region)
+        setSubRegionData("default")
         setInputData("")
     }
 
