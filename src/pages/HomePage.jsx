@@ -10,10 +10,8 @@ const HomePage = ({ countriesData }) => {
 
     let [regionData, setRegionData] = useState("default")
     let [inputData, setInputData] = useState("")
-    let [populationData, setPopulationData] = useState("default")
-    let [areaData, setAreaData] = useState("default")
+    let [sortedData, setSortedData] = useState({ populationData: "default", areaData: "default" })
     let [subRegionData, setSubRegionData] = useState("default")
-
 
     let filterData = JSON.parse(JSON.stringify(countriesData));
 
@@ -24,21 +22,34 @@ const HomePage = ({ countriesData }) => {
 
     function handleInputChange(input) {
         setInputData(input)
-
     }
-    function sortByPopulation(populationValue) {
 
-        setPopulationData(populationValue)
-        setAreaData("default")
+    function sortByPopulation(populationValue) {
+        setSortedData(
+            {
+                ...sortedData,
+                populationData: populationValue,
+                areaData: "default"
+            }
+        )
+
     }
 
     function sortByArea(areaValue) {
-        setAreaData(areaValue)
-        setPopulationData("default")
+        setSortedData(
+            {
+                ...sortedData,
+                areaData: areaValue,
+                populationData: "default"
+
+            }
+        )
+
     }
 
     function handleSubRegionChange(regionValue) {
         setSubRegionData(regionValue)
+
     }
 
 
@@ -71,18 +82,18 @@ const HomePage = ({ countriesData }) => {
         filterData = newInputData
     }
 
-    if (populationData == "Ascending") {
+    if (sortedData.populationData == "Ascending") {
         filterData.sort((country1, country2) => country1.population - country2.population)
 
     }
-    else if (populationData == "Descending") {
+    else if (sortedData.populationData == "Descending") {
         filterData.sort((country1, country2) => country2.population - country1.population)
     }
 
-    if (areaData == "Ascending") {
+    if (sortedData.areaData == "Ascending") {
         filterData.sort((country1, country2) => country1.area - country2.area)
     }
-    else if (areaData == "Descending") {
+    else if (sortedData.areaData == "Descending") {
         filterData.sort((country1, country2) => country2.area - country1.area)
     }
 
@@ -114,7 +125,7 @@ const HomePage = ({ countriesData }) => {
 
     return (
         <div className={`${darkTheme ? 'bg-white-100 text-black' : 'bg-[#202D36] min-h-[100vh] text-white'}`}>
-            
+
             <div className={`${darkTheme ? 'bg-white-100 text-black' : 'bg-[#202D36] text-white'} flex justify-between mx-10`}>
 
                 <InpuSearch handleInputChange={handleInputChange} />
@@ -124,13 +135,13 @@ const HomePage = ({ countriesData }) => {
                     subRegionsData={subRegionsData}
                     handleSubRegionChange={handleSubRegionChange}
                 />
-                <Sort value={"Sort By Population"} onSortEvent={sortByPopulation} sortedValue={populationData} />
-                <Sort value={"Sort By Area"} onSortEvent={sortByArea} sortedValue={areaData} />
+                <Sort value={"Sort By Population"} onSortEvent={sortByPopulation} sortedValue={sortedData.populationData} />
+                <Sort value={"Sort By Area"} onSortEvent={sortByArea} sortedValue={sortedData.areaData} />
 
             </div>
 
             <div className="flex flex-wrap justify-between mx-20">
-                { filterData.length >0 ? filterData.map((country) => {
+                {filterData.length > 0 ? filterData.map((country) => {
                     return <CountriesCards countriesData={country} key={country.cca3} />
                 }) : <h1 className='text-2xl'>No Filter data found</h1>}
             </div>
