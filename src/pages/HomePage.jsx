@@ -48,6 +48,7 @@ const HomePage = ({ countriesData }) => {
 
     function handleSubRegionChange(regionValue) {
         setSubRegionData(regionValue)
+        
 
     }
 
@@ -102,8 +103,6 @@ const HomePage = ({ countriesData }) => {
 
     }
    
-    
-
     const filteredCountriesData = filteredData()
 
     const continenetsData = countriesData.reduce((acc, curr) => {
@@ -135,7 +134,7 @@ const HomePage = ({ countriesData }) => {
 
             <div className={`${darkTheme ? 'bg-white-100 text-black' : 'bg-[#202D36] text-white'} flex justify-between mx-10`}>
 
-                <InpuSearch handleInputChange={handleInputChange} />
+                <InpuSearch handleInputChange={handleInputChange} inputData={inputData}/>
                 <CountrySections
                     handleRegionChange={handleRegionChange}
                     continenetsData={continenetsData}
