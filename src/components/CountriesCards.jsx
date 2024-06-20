@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const CountriesCards = ({ countriesData }) => {
 
-    let { darkTheme } = useContext(ThemeChange)
+    const { darkTheme } = useContext(ThemeChange)
 
     return (
 

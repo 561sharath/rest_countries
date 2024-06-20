@@ -7,7 +7,7 @@ const Sort = ({value,onSortEvent,sortedValue}) => {
         
         onSortEvent(populationSortType)
     }
-    let {darkTheme} = useContext(ThemeChange)
+    const {darkTheme} = useContext(ThemeChange)
     return (
         <div className={`${darkTheme ? 'bg-white' : 'bg-[#202D36]'} px-10 py-5 mb-5 items-center  my-2`}>
             <select className={`px-2 mx-5 py-5 rounded-md  shadow-lg mt-[-10px] ${darkTheme ? 'bg-white text-black' : 'bg-[#2B3743] text-white'}`} onChange={handleSort}>

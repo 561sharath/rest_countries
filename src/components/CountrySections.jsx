@@ -5,7 +5,7 @@ const CountrySections = ({handleRegionChange,continenetsData,subRegionsData,hand
 
     const handleChange = (e) => {
         const region = e.target.value
-        let subregionselect = document.getElementById('subRegion')
+        const subregionselect = document.getElementById('subRegion')
         if (region != "default"){
             subregionselect.style.display = "block"
         }else{
@@ -19,8 +19,9 @@ const CountrySections = ({handleRegionChange,continenetsData,subRegionsData,hand
         handleSubRegionChange(subregion)
 
     }
+
     
-    let {darkTheme} = useContext(ThemeChange)
+    const {darkTheme} = useContext(ThemeChange)
     
 
     return (
@@ -42,6 +43,8 @@ const CountrySections = ({handleRegionChange,continenetsData,subRegionsData,hand
                             <option value={subregion} key={subregion}>{subregion}</option>
                         )}
                 </select >
+
+                
             </section>
         </div>
     )

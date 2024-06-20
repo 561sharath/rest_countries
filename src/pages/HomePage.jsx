@@ -8,13 +8,11 @@ import InpuSearch from '../components/InpuSearch'
 
 const HomePage = ({ countriesData }) => {
 
-    let [regionData, setRegionData] = useState("default")
-    let [inputData, setInputData] = useState("")
-    let [sortedData, setSortedData] = useState({ populationData: "default", areaData: "default" })
-    let [subRegionData, setSubRegionData] = useState("default")
-
-    let filterData = JSON.parse(JSON.stringify(countriesData));
-
+    const [regionData, setRegionData] = useState("default")
+    const [inputData, setInputData] = useState("")
+    const [sortedData, setSortedData] = useState({ populationData: "default", areaData: "default" })
+    const [subRegionData, setSubRegionData] = useState("default")
+    
     function handleRegionChange(region) {
         setRegionData(region)
         setSubRegionData("default")
@@ -53,52 +51,60 @@ const HomePage = ({ countriesData }) => {
 
     }
 
+    function filteredData(){
 
+        let filterData = countriesData
 
-    if (regionData == "default") {
+        if (regionData == "default") {
 
-        filterData = [...countriesData]
-    }
-    else {
-
-        let newRegionData = countriesData.filter((country) => country.region == regionData)
-        filterData = newRegionData
-
-        if (subRegionData != "default") {
-
-            let newSubRegionData = filterData.filter((country) => country.subregion == subRegionData)
-            filterData = newSubRegionData
+            filterData = countriesData
         }
         else {
+    
+            let newRegionData = filterData.filter((country) => country.region == regionData)
             filterData = newRegionData
-        }
-    }
-
-    if (inputData != "") {
-        let newInputData = filterData.filter((country) => {
-            if (country.name.common.toLowerCase().includes(inputData.toLowerCase())) {
-                return country
+    
+            if (subRegionData != "default") {
+    
+                let newSubRegionData = filterData.filter((country) => country.subregion == subRegionData)
+                filterData = newSubRegionData
             }
-        })
-        filterData = newInputData
-    }
+            else {
+                filterData = newRegionData
+            }
+        }
+    
+        if (inputData != "") {
+            let newInputData = filterData.filter((country) => {
+                if (country.name.common.toLowerCase().includes(inputData.toLowerCase())) {
+                    return country
+                }
+            })
+            filterData = newInputData
+        }
+    
+        if (sortedData.populationData == "Ascending") {
+            filterData.sort((country1, country2) => country1.population - country2.population)
+    
+        }
+        else if (sortedData.populationData == "Descending") {
+            filterData.sort((country1, country2) => country2.population - country1.population)
+        }
+    
+        if (sortedData.areaData == "Ascending") {
+            filterData.sort((country1, country2) => country1.area - country2.area)
+        }
+        else if (sortedData.areaData == "Descending") {
+            filterData.sort((country1, country2) => country2.area - country1.area)
+        }
 
-    if (sortedData.populationData == "Ascending") {
-        filterData.sort((country1, country2) => country1.population - country2.population)
+        return filterData
 
     }
-    else if (sortedData.populationData == "Descending") {
-        filterData.sort((country1, country2) => country2.population - country1.population)
-    }
+   
+    
 
-    if (sortedData.areaData == "Ascending") {
-        filterData.sort((country1, country2) => country1.area - country2.area)
-    }
-    else if (sortedData.areaData == "Descending") {
-        filterData.sort((country1, country2) => country2.area - country1.area)
-    }
-
-
+    const filteredCountriesData = filteredData()
 
     const continenetsData = countriesData.reduce((acc, curr) => {
 
@@ -120,9 +126,9 @@ const HomePage = ({ countriesData }) => {
         return acc
     }, [])
 
-
-
-    let { darkTheme } = useContext(ThemeChange)
+    
+    
+    const { darkTheme } = useContext(ThemeChange)
 
     return (
         <div className={`${darkTheme ? 'bg-white-100 text-black' : 'bg-[#202D36] min-h-[100vh] text-white'}`}>
@@ -142,7 +148,7 @@ const HomePage = ({ countriesData }) => {
             </div>
 
             <div className="flex flex-wrap justify-between mx-20">
-                {filterData.length > 0 ? filterData.map((country) => {
+                {filteredCountriesData.length > 0 ? filteredCountriesData.map((country) => {
                     return <CountriesCards countriesData={country} key={country.cca3} />
                 }) : <h1 className='text-2xl'>No Filter data found</h1>}
             </div>

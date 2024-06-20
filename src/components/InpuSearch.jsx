@@ -7,7 +7,7 @@ const InpuSearch = ({ handleInputChange }) => {
         const inputData = e.target.value
         handleInputChange(inputData.trim())
     }
-    let {darkTheme} = useContext(ThemeChange)
+    const {darkTheme} = useContext(ThemeChange)
     return (
         <div className={`${darkTheme ? 'bg-white' : 'bg-[#202D36]'}`}>
             <section className="serach-section px-10 py-5 mb-5 items-center ">

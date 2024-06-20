@@ -5,52 +5,59 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import About from './pages/AboutPage'
 import Header from './components/Header'
 import ErrorPage from './pages/ErrorPage'
+import { getCountriesData } from './Api'
 
 const App = () => {
-
-  const Api_Url = "https://restcountries.com/v3.1/all"
-  let [countriesData, setCountriesData] = useState([])//main
-  let [errorState, setErrorState] = useState("")
+  
+  const [countriesData, setCountriesData] = useState([])
+  const [status, setStatus] = useState({ loading: true, error: null })
 
   useEffect(() => {
 
-    async function fetchData(Api_Url) {
-
+    async function fetchData() {
       try {
-        const data = await fetch(Api_Url)
-        const jsonData = await data.json()
-        setCountriesData(jsonData)
+        const data = await getCountriesData();
+        setCountriesData(data)
+        setStatus({ loading: false, error: null })
 
       } catch (error) {
-        console.log(error.message)
-        setErrorState("unable to fetch the data")
+        setStatus({ loading: false, error: error.message })
       }
     }
 
-    fetchData(Api_Url)
+    fetchData()
   }, [])
+
+  if (status.loading) {
+    return (
+      <div className='m-20'>
+        <div className='text-4xl'>
+          Loading .....
+        </div>
+      </div>
+    )
+  }
+
+  if (status.error) {
+    return (
+      <div className='text-4xl m-20'>
+        {status.error}
+      </div>
+    )
+  }
 
   return (
     <>
-      {errorState.length > 0 ? <ErrorPage /> :
-        countriesData.length === 0 ?
-          <div className='flex justify-center items-center m-auto mt-[10%]'>
-
-            <img src="https://i.gifer.com/ZZ5H.gif" alt="loader" />
-          </div> :
-
-          <ThemeProvider>
-            <BrowserRouter>
-              <Header />
-              <Routes>
-                <Route path="/" element={<HomePage countriesData={countriesData} />} />
-                <Route path="/about/:countryId" element={<About />} />
-                <Route path='*' element={<ErrorPage />} />
-              </Routes>
-            </BrowserRouter>
-          </ThemeProvider>
-      }
-
+      <ThemeProvider>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<HomePage countriesData={countriesData} />} />
+            <Route path="/about/:countryId" element={<About />} />
+            <Route path='*' element={<ErrorPage />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   )
 }
